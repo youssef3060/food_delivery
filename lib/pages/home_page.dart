@@ -25,6 +25,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   String? categoryChoseID;
   late List<FoodItem> filteredFood;
+  bool enableCategoryFilter = false;
 
   @override
   void initState() {
@@ -61,14 +62,24 @@ class _HomePageState extends State<HomePage> {
                     (BuildContext context, int index) => InkWell(
                       onTap: () {
                         setState(() {
-                          categoryChoseID = categories[index].id;
+                          if (categoryChoseID == categories[index].id ||
+                              !enableCategoryFilter) {
+                            enableCategoryFilter = !enableCategoryFilter;
+                          }
+                          if (enableCategoryFilter) {
+                            categoryChoseID = categories[index].id;
+                            filteredFood =
+                                food
+                                    .where(
+                                      (item) =>
+                                          item.categoryID == categoryChoseID,
+                                    )
+                                    .toList();
+                          } else {
+                            categoryChoseID = null;
+                            filteredFood = food;
+                          }
                         });
-                        filteredFood =
-                            food
-                                .where(
-                                  (item) => item.categoryID == categoryChoseID,
-                                )
-                                .toList();
                       },
                       child: Padding(
                         padding: const EdgeInsetsDirectional.only(end: 16.0),
@@ -135,7 +146,7 @@ class _HomePageState extends State<HomePage> {
                           )
                           .then((value) {
                             filteredFood = food;
-                            categoryChoseID = null; 
+                            categoryChoseID = null;
                             setState(() {});
                             debugPrint('the value of $value');
                           });
