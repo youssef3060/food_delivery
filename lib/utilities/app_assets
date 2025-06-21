@@ -1,0 +1,11 @@
+class AppAssets {
+    
+    static const String burgerIcon = 'assets/images/icons/hamburger.png';
+    static const String pizzaIcon = 'assets/images/icons/pizza.png';
+    static const String pasta = 'assets/images/icons/spaghetti.png';
+ 
+
+    static const String accountPic = 'assets/images/acc_icon.jpg';
+    static const String bannerPic = 'assets/images/burger.jpg';
+    static const String favoritesImage = 'assets/images/favorites.png';
+}
