@@ -122,13 +122,20 @@ class _HomePageState extends State<HomePage> {
                   (BuildContext context, int index) => InkWell(
                     splashColor: const Color.fromARGB(255, 223, 169, 153),
                     onTap: () {
-                      final targetedIndex = food.indexOf(filteredFood[index]);
+                      final targetedFoodItem = food.firstWhere(
+                        (item) => item.id == filteredFood[index].id,
+                      );
+                      final targetedIndex = food.indexOf(targetedFoodItem);
                       Navigator.of(context)
                           .pushNamed(
                             FoodDetailsPage.routeName,
-                            arguments: FoodDetailsArgs(foodIndex: targetedIndex),
+                            arguments: FoodDetailsArgs(
+                              foodIndex: targetedIndex,
+                            ),
                           )
                           .then((value) {
+                            filteredFood = food;
+                            categoryChoseID = null; 
                             setState(() {});
                             debugPrint('the value of $value');
                           });
